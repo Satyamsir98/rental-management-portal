@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Management Portal</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+        <div class="container-fluid">
+            <!-- Left-most: Welcome and User Details (Only show if logged in) -->
+            {% if session['user_id'] %}
+            <div class="navbar-brand text-white">
+                Welcome, {{ session['username'] }} (ID: {{ session['user_id'] }})
+            </div>
+            {% endif %}
+            {% if session['user_id'] %}
+            <div style="margin-right: 5rem;">
+                <li>
+                    <a href="{{ url_for('view_notifications') }}" class="btn btn-outline-light">
+                        Notifications <span class="badge bg-secondary">{{ g.unread_count or 0 }}</span>
+                    </a>
+                </li>
+            </div>
+            
+            {% endif %}
+
+            <!-- Center: Title with Dynamic Link to Dashboard -->
+            <div style="margin-right: 22rem;" >
+                <a href="{{ url_for('dashboard_redirect') }}" class="navbar-text text-center text-white fw-bold"
+                    style="font-size: 1.5rem;">
+                    Rental Management Portal
+                </a>
+            </div>
+
+        </div>
+        <!-- Right-most: Logout Button (Only show if logged in) -->
+        {% if session['user_id'] %}
+        <div class="ms-auto">
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-light">Logout</a>
+        </div>
+        {% endif %}
+        </div>
+    </nav>
+    <!-- Display Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} mt-3">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="container mt-5">
+        <!-- Content Block -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="container mt-4">
+    <h2>Edit Maintenance Request</h2>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" class="form-control">
+                <option value="Open" {% if maintenance_request.status == "Open" %}selected{% endif %}>Open</option>
+                <option value="In Progress" {% if maintenance_request.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                <option value="Closed" {% if maintenance_request.status == "Closed" %}selected{% endif %}>Closed</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="comments">Comments</label>
+            <textarea id="comments" name="comments" class="form-control" rows="3">{{ maintenance_request.comments }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Request</button>
+    </form>
+</div>
+{% endblock %}

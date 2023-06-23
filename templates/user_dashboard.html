@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Welcome to the Rental Management Portal</h1>
+        <p>Here you can manage your leases, payments, and maintenance requests.</p>
+
+        {% if session.get('user_id') %}
+            <!-- Button to view lease information -->
+            <a href="{{ url_for('lease') }}" class="btn btn-primary">View Lease Information</a>
+
+            <!-- Button to view all maintenance requests -->
+            <a href="{{ url_for('view_maintenance') }}" class="btn btn-success">View All Maintenance Requests</a>
+
+            <!-- Button to submit a new maintenance request -->
+            <a href="{{ url_for('maintenance') }}" class="btn btn-warning">Submit a Maintenance Request</a>
+            
+            <!-- Button to view Payment History -->
+            <a href="{{ url_for('payments') }}" class="btn btn-primary">View Payment History</a>
+
+            <!-- Button to submit a new payment -->
+            <a href="{{ url_for('submit_payment') }}" class="btn btn-success">Submit Payment</a>
+        {% else %}
+            <p>Please log in to access your lease information and maintenance requests.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

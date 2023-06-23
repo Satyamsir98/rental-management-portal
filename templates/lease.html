@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Your Lease Information</h1>
+
+        {% if lease %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Unit Number</th>
+                        <th>Lease Start</th>
+                        <th>Lease End</th>
+                        <th>Rent Rate</th>
+                        <th>Lease Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ lease.unit_no }}</td>
+                        <td>{{ lease.lease_start.strftime('%Y-%m-%d') }}</td> <!-- Format date -->
+                        <td>{{ lease.lease_end }}</td> <!-- Format date -->
+                        <td>{{ lease.rent_rate }}</td>
+                        <td><a href="{{ lease.document_path }}" target="_blank">View Document</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p>You don't have any lease information for now.</p>
+        {% endif %}
+    </div>
+{% endblock %}

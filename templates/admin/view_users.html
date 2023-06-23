@@ -1,0 +1,101 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="container mt-4">
+    <h1>Manage Users</h1>
+
+    <!-- User List -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>Lease Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_data in user_data %}
+            <tr>
+                <td>{{ user_data.user.last_name }}</td>
+                <td>{{ user_data.user.username }}</td>
+                <td>{{ user_data.user.phone }}</td>
+                <td>
+                    {% if user_data.leases %}
+                    <ul class="list-unstyled">
+                        <li>
+                            <strong>Unit:</strong> {{ user_data.leases[0].unit_no }}<br>
+                            <strong>Start:</strong> {{ user_data.leases[0].lease_start }}<br>
+                            <strong>End:</strong> {{ user_data.leases[0].lease_end }}<br>
+                            <strong>Status:</strong> 
+                            <span class="badge {% if user_data.leases[0].lease_end < current_date %}bg-danger{% else %}bg-success{% endif %}">
+                                {% if user_data.leases[0].lease_end < current_date %}Expired{% else %}Active{% endif %}
+                            </span>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <span class="badge bg-warning text-dark">No Lease Assigned</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not user_data.leases %}
+                    <!-- Assign Lease Form (only if no lease exists) -->
+                    <form method="post" action="{{ url_for('view_all_users') }}" class="mb-2">
+                        <input type="hidden" name="action" value="assign_lease">
+                        <input type="hidden" name="user_id" value="{{ user_data.user.id }}">
+                        <select name="property_id" class="form-control mb-1">
+                            <option value="">Select Property</option>
+                            {% for property in properties %}
+                            <option value="{{ property.id }}">{{ property.address }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="unit_no" placeholder="Unit No" class="form-control mb-1" required>
+                        <input type="date" name="lease_start" placeholder="Lease Start" class="form-control mb-1" required>
+                        <input type="date" name="lease_end" placeholder="Lease End" class="form-control mb-1" required>
+                        <input type="number" name="rent_rate" placeholder="Rent Rate" class="form-control mb-1" required>
+                        <input type="text" name="document_path" placeholder="Document Path (optional)" class="form-control mb-1">
+                        <button type="submit" class="btn btn-success btn-sm">Assign Lease</button>
+                    </form>
+                    {% endif %}
+
+                    {% if user_data.leases %}
+                    <!-- Display Lease Active/Expired message -->
+                    {% if user_data.leases[0].lease_end < current_date %}
+                    <!-- <span class="badge bg-danger text-white">Lease Expired</span> -->
+
+                    <!-- Assign Lease Form (Visible for expired lease users) -->
+                    <form method="post" action="{{ url_for('view_all_users') }}" class="mb-2">
+                        <input type="hidden" name="action" value="assign_lease">
+                        <input type="hidden" name="user_id" value="{{ user_data.user.id }}">
+                        <select name="property_id" class="form-control mb-1">
+                            <option value="">Select Property</option>
+                            {% for property in properties %}
+                            <option value="{{ property.id }}">{{ property.address }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="unit_no" placeholder="Unit No" class="form-control mb-1" required>
+                        <input type="date" name="lease_start" placeholder="Lease Start" class="form-control mb-1" required>
+                        <input type="date" name="lease_end" placeholder="Lease End" class="form-control mb-1" required>
+                        <input type="number" name="rent_rate" placeholder="Rent Rate" class="form-control mb-1" required>
+                        <input type="text" name="document_path" placeholder="Document Path (optional)" class="form-control mb-1">
+                        <button type="submit" class="btn btn-success btn-sm">Assign New Lease</button>
+                    </form>
+
+                    <!-- Delete User Form -->
+                    <form method="post" action="{{ url_for('view_all_users') }}">
+                        <input type="hidden" name="action" value="delete_user">
+                        <input type="hidden" name="user_id" value="{{ user_data.user.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete User</button>
+                    </form>
+                    {% else %}
+                    <span class="badge bg-success text-white">Lease Active</span>
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

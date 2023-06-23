@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+    <div class="ml-auto">
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <!-- Admin-specific content will go here -->
+    {% block admin_content %}{% endblock %}
+{% endblock %}

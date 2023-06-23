@@ -1,0 +1,42 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="container mt-4">
+    <h1>Generate Rent Payment Reports</h1>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>User</th>
+                <th>Lease Start</th>
+                <th>Lease End</th>
+                <th>Total Amount Paid</th>
+                <th>Balance</th>
+                <th>Due Date</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+                <tr>
+                    <td>{{ report.user.username }}</td>
+                    <td>{{ report.lease.lease_start.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ report.lease.lease_end.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% if report.last_payment %}
+                            {{ "%.2f"|format(report.total_amount_paid) }}
+                        {% else %}
+                            Not Paid Yet
+                        {% endif %}
+                    </td>
+                    <td>{{ "%.2f"|format(report.balance) }}</td>
+                    <td>{{ report.due_date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {{ report.payment_status }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

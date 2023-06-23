@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome to the Rental Management Portal</h1>
+    <p>Here you can manage your leases, payments, and maintenance requests.</p>
+    <!-- <div class="row"> -->
+        <!-- <div class="col-md-3"> -->
+            <a href="{{ url_for('manage_properties') }}" class="btn btn-success ">Manage Properties</a>
+        <!-- </div> -->
+        <!-- <div class="col-md-3"> -->
+            <a href="{{ url_for('view_maintenance_requests') }}" class="btn btn-primary ">View all Users Maintenance Requests</a>
+        <!-- </div> -->
+        <!-- <div class="col-md-3"> -->
+            <a href="{{ url_for('generate_reports') }}" class="btn btn-warning ">Generate Rent Reports</a>
+        <!-- </div> -->
+        <!-- <div class="col-md-3"> -->
+            <a href="{{ url_for('view_all_leases') }}" class="btn btn-success ">View All Leases of Users</a>
+        <!-- </div> -->
+        <!-- <div class="col-md-4"> -->
+            <a href="{{ url_for('view_all_users') }}" class="btn btn-warning ">View All Users and Asign lease</a>
+        <!-- </div>         -->
+    <!-- </div> -->
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+

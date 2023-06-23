@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="container mt-4">
+    <h2>View Maintenance Requests</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Issue Description</th>
+                <th>Category</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in maintenance_requests %}
+                <tr>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.issue_description }}</td>
+                    <td>{{ request.category }}</td>
+                    <td>{{ request.severity }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.comments }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_maintenance_request', request_id=request.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
