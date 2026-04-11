@@ -575,7 +575,7 @@ with app.app_context():
     from models import User
     if not User.query.first():
         print("Seeding database...")
-        seed_all()
+        seed_all(app)
     else:
         print("Database already seeded, skipping...")  
     print("Tables created successfully!")
