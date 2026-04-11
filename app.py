@@ -13,6 +13,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from scheduler import check_due_dates
 from apscheduler.triggers.interval import IntervalTrigger
 import logging
+from seed import seed_all
 
 
 # Initializing Flask app
@@ -29,6 +30,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Initializing database and migration tool
 db.init_app(app)
 migrate = Migrate(app, db)
+
+
 
 # Initializing the scheduler
 scheduler = BackgroundScheduler(daemon = True)
@@ -568,7 +571,13 @@ def not_found_error(error):
 #/////////////////////////////////////////////////////////////////////////////
 # Create all tables
 with app.app_context():
-    db.create_all()  
+    db.create_all()
+    from models import User
+    if not User.query.first():
+        print("Seeding database...")
+        seed_all()
+    else:
+        print("Database already seeded, skipping...")  
     print("Tables created successfully!")
     if not scheduler.running:
         scheduler.start()

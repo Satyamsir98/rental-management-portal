@@ -1,4 +1,4 @@
-from app import app, db
+from app import db
 from models import User, Property, Lease
 from werkzeug.security import generate_password_hash
 from datetime import date
@@ -82,7 +82,7 @@ def seed_users_and_properties():
     else:
         print("Lease already exists.")
 
-def seed_all():
+def seed_all(app):
     with app.app_context():
         # Seed the admin user
         seed_admin()
