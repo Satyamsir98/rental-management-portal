@@ -76,9 +76,15 @@ Frontend (Template/UI)
 ```bash
 python app.py
 ```
-
 ---
 
+## 🌐 Live Demo
+
+The application is deployed using Surge and can be accessed here:
+
+👉 https://rental-management-portal-1.onrender.com
+
+---
 ## 🎯 Use Cases
 
 - Property management systems  
